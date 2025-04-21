@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minecraft Crate Key Shop</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #1e1e2f;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+    .crate {
+      background: #292942;
+      border-radius: 12px;
+      margin: 20px auto;
+      padding: 20px;
+      width: 300px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    }
+    .crate h2 {
+      margin-bottom: 10px;
+    }
+    .paypal-button {
+      margin-top: 10px;
+    }
+  </style>
+  <script src="https://www.paypal.com/sdk/js?client-id=AVGgHYiVzCYxslHRT8c-rhO2o_44Hp3W9MCI9ahBqOt1TkVqVXWFINOUUNK16_PCy1CGaZzsKoOTHj5g&currency=USD"></script>
+</head>
+<body>
+  <h1>Minecraft Crate Key Shop</h1>
+
+  <div class="crate">
+    <h2>Seasonal Crate - $2</h2>
+    <div id="paypal-seasonal"></div>
+  </div>
+
+  <div class="crate">
+    <h2>Spawner Crate - $3</h2>
+    <div id="paypal-spawner"></div>
+  </div>
+
+  <div class="crate">
+    <h2>Mythic Crate - $5</h2>
+    <div id="paypal-mythic"></div>
+  </div>
+
+  <div class="crate">
+    <h2>Ultra Crate - $10</h2>
+    <div id="paypal-ultra"></div>
+  </div>
+
+  <script>
+    function renderPayPalButton(id, amount, crateName) {
+      paypal.Buttons({
+        createOrder: function(data, actions) {
+          return actions.order.create({
+            purchase_units: [{
+              amount: { value: amount },
+              description: crateName + ' Key'
+            }]
+          });
+        },
+        onApprove: function(data, actions) {
+          return actions.order.capture().then(function(details) {
+            alert(crateName + ' Key purchased successfully!');
+            // Here, you can send data to your Minecraft server to give the player the key.
+          });
+        }
+      }).render(id);
+    }
+
+    renderPayPalButton('#paypal-seasonal', '2.00', 'Seasonal Crate');
+    renderPayPalButton('#paypal-spawner', '3.00', 'Spawner Crate');
+    renderPayPalButton('#paypal-mythic', '5.00', 'Mythic Crate');
+    renderPayPalButton('#paypal-ultra', '10.00', 'Ultra Crate');
+  </script>
+</body>
+</html>
